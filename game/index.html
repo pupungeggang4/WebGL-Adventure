@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>3D Adventure</title>
+        <style>
+            @font-face {
+                font-family: 'neodgm';
+                src: url('Font/neodgm.ttf');
+            }
+
+            body {
+                touch-action: none;
+                overscroll-behavior: none;
+            }
+
+            #screen {
+                border: 2px solid black;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                max-width: 96%;
+                max-height: 96%;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id='screen' width='1280' height='720'></canvas>
+        <script src='script/asset.js'></script>
+        <script src='script/ui.js'></script>
+        <script src='script/const.js'></script>
+        <script src='script/data.js'></script>
+
+        <script src='script/primitive.js'></script>
+        <script src='script/world.js'></script>
+        <script src='script/player.js'></script>
+
+        <script src='script/renderui.js'></script>
+        <script src='script/renderworld.js'></script>
+        <script src='script/function.js'></script>
+        <script src='script/scenetitle.js'></script>
+        <script src='script/scenegame.js'></script>
+
+        <script src='script/main.js'></script>
+    </body>
+</html>
