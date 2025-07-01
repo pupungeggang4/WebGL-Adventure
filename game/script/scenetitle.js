@@ -19,6 +19,8 @@ class SceneTitle {
         let glVar = game.glVar
         RenderGL.renderInit(gl, glVar)
         gl.bindVertexArray(glVar.vao)
+        gl.uniform1i(glVar.location.uModeV, 0)
+        gl.uniform1i(glVar.location.uModeF, 0)
         gl.bindBuffer(gl.ARRAY_BUFFER, glVar.buffer.hud)
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, game.canvasHUD)
         gl.drawArrays(gl.TRIANGLES, 0, 6)
@@ -29,7 +31,12 @@ class SceneTitle {
     }
 
     static mouseUp(game, pos, button) {
-
+        if (button === 0) {
+            if (pointInsideRectUI(pos, UI.title.buttonStart)) {
+                game.scene = 'game'
+                game.state = ''
+            }
+        }
     }
 
     static keyDown(game, key) {

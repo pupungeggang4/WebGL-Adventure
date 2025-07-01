@@ -46,9 +46,9 @@ class Game {
         let button = event.button
 
         if (this.scene === 'title') {
-
+            SceneTitle.mouseDown(this, pos, button)
         } else if (this.scene === 'game') {
-
+            SceneGame.mouseDown(this, pos, button)
         }
     }
 
@@ -61,9 +61,9 @@ class Game {
         let button = event.button
 
         if (this.scene === 'title') {
-
+            SceneTitle.mouseUp(this, pos, button)
         } else if (this.scene === 'game') {
-
+            SceneGame.mouseUp(this, pos, button)
         }
     }
 
