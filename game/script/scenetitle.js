@@ -1,11 +1,10 @@
 class SceneTitle {
     static loop(game) {
         SceneTitle.renderHUD(game)
+        SceneTitle.renderScreen(game)
     }
 
     static renderHUD(game) {
-        let gl = game.gl
-        RenderGL.renderInit(gl)
         RenderHUD.init(game.ctx)
         game.ctx.fillStyle = 'white'
         game.ctx.fillRect(0, 0, 1280, 720)
@@ -13,7 +12,31 @@ class SceneTitle {
         RenderHUD.fillTextHUD(game.ctx, '3D Adventure', UI.title.textTitle)
         RenderHUD.strokeRectHUD(game.ctx, UI.title.buttonStart)
         RenderHUD.fillTextHUD(game.ctx, 'Start Game', UI.title.textStart)
-        //gl.bindTexture()
-        //gl.texImage2D(gl.TEXTURE)
+    }
+
+    static renderScreen(game) {
+        let gl = game.gl
+        let glVar = game.glVar
+        RenderGL.renderInit(gl, glVar)
+        gl.bindVertexArray(glVar.vao)
+        gl.bindBuffer(gl.ARRAY_BUFFER, glVar.buffer.hud)
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, game.canvasHUD)
+        gl.drawArrays(gl.TRIANGLES, 0, 6)
+    }
+
+    static mouseDown(game, pos, button) {
+
+    }
+
+    static mouseUp(game, pos, button) {
+
+    }
+
+    static keyDown(game, key) {
+
+    }
+
+    static keyUp(game, key) {
+
     }
 }

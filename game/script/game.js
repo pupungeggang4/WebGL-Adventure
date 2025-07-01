@@ -59,6 +59,12 @@ class Game {
             y: (event.clientY - targetRect.top) / targetRect.height * this.canvas.height
         }
         let button = event.button
+
+        if (this.scene === 'title') {
+
+        } else if (this.scene === 'game') {
+
+        }
     }
 
     keyDown(event) {
