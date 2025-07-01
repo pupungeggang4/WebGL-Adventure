@@ -42,7 +42,15 @@ class RenderGL {
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST)
 
-        //glVar.vao = {}
-        //glVar.vao.hud = gl.createVertexArray()
+        glVar.vao = gl.createVertexArray()
+        gl.bindVertexArray(glVar.vao)
+    }
+
+    static renderInit(gl) {
+        gl.clearColor(0.0, 0.0, 0.0, 1.0)
+        gl.enable(gl.BLEND | gl.DEPTH_TEST)
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+        gl.clear(gl.COLOR_BUFFER_BIT)
+        gl.lineWidth(2)
     }
 }
