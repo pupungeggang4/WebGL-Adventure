@@ -1,0 +1,20 @@
+{
+  "name": "web_adventure",
+  "version": "1.0.0",
+  "description": "A Web Adventure Game",
+  "homepage": "https://github.com/pupungeggang4/WebGL-Adventure#readme",
+  "bugs": {
+    "url": "https://github.com/pupungeggang4/WebGL-Adventure/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pupungeggang4/WebGL-Adventure.git"
+  },
+  "license": "ISC",
+  "author": "pupungeggang4",
+  "type": "commonjs",
+  "main": "game/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

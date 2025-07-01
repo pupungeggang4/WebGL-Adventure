@@ -9,14 +9,14 @@ const sourceVertexShader = `#version 300 es
     }
 `
 
-const sourceFragmentShader = `version 300 es
+const sourceFragmentShader = `#version 300 es
     precision highp float;
     uniform sampler2D t_sampler;
     in vec2 p_coord;
     out vec4 o_color;
 
     void main() {
-        o_color = texture(t_sampler, p_texcoord);
+        o_color = texture(t_sampler, p_coord);
     }
 `
 
@@ -35,15 +35,25 @@ class RenderGL {
         gl.linkProgram(glVar.shader.program)
 
         glVar.location = {}
+        glVar.location.aTexcoord = gl.getUniformLocation(glVar.shader.program, 'a_texcoord')
+
+        glVar.vao = gl.createVertexArray()
+        gl.bindVertexArray(glVar.vao)
+        glVar.buffer = {}
+        glVar.buffer.hud = gl.createBuffer(gl.ARRAY_BUFFER)
+        gl.bindBuffer(gl.ARRAY_BUFFER, glVar.buffer.hud)
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+            0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0
+        ]), gl.STATIC_DRAW)
+        gl.vertexAttribPointer('a_texcoord', 2, gl.FLOAT, false, 2 * 4, 0)
+        gl.enableVertexAttribArray(glVar.location.aTexcoord)
+
         glVar.texture = gl.createTexture()
         gl.bindTexture(gl.TEXTURE_2D, glVar.texture)
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST)
-
-        glVar.vao = gl.createVertexArray()
-        gl.bindVertexArray(glVar.vao)
     }
 
     static renderInit(gl) {
