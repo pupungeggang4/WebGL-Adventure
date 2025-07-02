@@ -24,6 +24,9 @@ class SceneGame {
         gl.enable(gl.DEPTH_TEST)
         gl.uniform1i(glVar.location.uModeV, 1)
         gl.uniform1i(glVar.location.uModeF, 1)
+        gl.enableVertexAttribArray(glVar.location.aPositionW)
+        gl.disableVertexAttribArray(glVar.location.aPosition)
+        gl.disableVertexAttribArray(glVar.location.aTexcoord)
         gl.bindBuffer(gl.ARRAY_BUFFER, glVar.buffer.triangle)
         gl.drawArrays(gl.TRIANGLES, 0, 3)
 
@@ -31,6 +34,9 @@ class SceneGame {
         gl.uniform1i(glVar.location.uModeV, 0)
         gl.uniform1i(glVar.location.uModeF, 0)
         gl.bindBuffer(gl.ARRAY_BUFFER, glVar.buffer.hud)
+        gl.disableVertexAttribArray(glVar.location.aPositionW)
+        gl.enableVertexAttribArray(glVar.location.aPosition)
+        gl.enableVertexAttribArray(glVar.location.aTexcoord)
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, game.canvasHUD)
         gl.drawArrays(gl.TRIANGLES, 0, 6)
     }

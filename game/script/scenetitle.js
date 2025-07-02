@@ -23,6 +23,7 @@ class SceneTitle {
         gl.uniform1i(glVar.location.uModeV, 0)
         gl.uniform1i(glVar.location.uModeF, 0)
         gl.bindBuffer(gl.ARRAY_BUFFER, glVar.buffer.hud)
+        gl.disableVertexAttribArray(glVar.location.aPositionW)
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, game.canvasHUD)
         gl.drawArrays(gl.TRIANGLES, 0, 6)
     }
