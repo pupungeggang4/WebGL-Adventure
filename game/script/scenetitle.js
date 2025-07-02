@@ -18,6 +18,7 @@ class SceneTitle {
         let gl = game.gl
         let glVar = game.glVar
         RenderGL.renderInit(gl, glVar)
+        gl.disable(gl.DEPTH_TEST)
         gl.bindVertexArray(glVar.vao)
         gl.uniform1i(glVar.location.uModeV, 0)
         gl.uniform1i(glVar.location.uModeF, 0)

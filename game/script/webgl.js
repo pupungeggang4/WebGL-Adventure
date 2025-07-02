@@ -89,7 +89,6 @@ class RenderGL {
     static renderInit(gl, glVar) {
         gl.clearColor(0.0, 0.0, 0.0, 1.0)
         gl.enable(gl.BLEND)
-        gl.enable(gl.DEPTH_TEST)
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         gl.lineWidth(2)
