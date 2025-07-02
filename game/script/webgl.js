@@ -1,4 +1,5 @@
 const sourceVertexShader = `#version 300 es
+    precision highp float;
     uniform int u_mode_v;
     in vec4 a_position;
     in vec4 a_position_w;
