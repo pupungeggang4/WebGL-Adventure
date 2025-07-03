@@ -13,6 +13,10 @@ class RenderHUD {
         ctx.strokeRect(rect[0], rect[1], rect[2], rect[3])
     }
 
+    static fillRectHUD(ctx, rect) {
+        ctx.fillRect(rect[0], rect[1], rect[2], rect[3])
+    }
+
     static fillTextHUD(ctx, text, pos) {
         ctx.fillText(text, pos[0], pos[1])
     }

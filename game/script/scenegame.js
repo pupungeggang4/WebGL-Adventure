@@ -11,8 +11,11 @@ class SceneGame {
     static renderHUD(game) {
         RenderHUD.init(game.ctx)
         game.ctx.fillStyle = 'white'
-        game.ctx.fillRect(640, 280, 80, 80)
+        RenderHUD.fillRectHUD(game.ctx, UI.hud.upperRect)
         game.ctx.fillStyle = 'black'
+        RenderHUD.drawImageHUD(game.ctx, img.icon.life, UI.hud.iconLife)
+        RenderHUD.fillTextHUD(game.ctx, `60/60`, UI.hud.textLife)
+        RenderHUD.fillTextHUD(game.ctx, `0, 0, 0`, UI.hud.textPosition)
     }
     
     static renderScreen(game) {

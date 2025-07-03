@@ -6,6 +6,10 @@ const UI = {
     },
 
     hud: {
-        lower: [40, 600, 80, 80]
+        upperRect: [20, 20, 320, 80],
+        iconLife: [20, 20],
+        textLife: [64, 24],
+        textPosition: [24, 64],
+        lower: [40, 600, 80, 80],
     },
 }

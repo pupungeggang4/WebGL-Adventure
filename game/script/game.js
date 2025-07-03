@@ -1,5 +1,6 @@
 class Game {
     constructor() {
+        imageLoad()
         this.scene = 'title'
         this.state = ''
 
