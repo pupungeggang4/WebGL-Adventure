@@ -57,24 +57,44 @@ class RenderGL {
         gl.bindVertexArray(glVar.vao)
         glVar.buffer = {}
         glVar.buffer.hud = gl.createBuffer(gl.ARRAY_BUFFER)
-        glVar.buffer.triangle = gl.createBuffer(gl.ARRAY_BUFFER)
+        glVar.buffer.hudIndex = gl.createBuffer(gl.ELEMENT_ARRAY_BUFFER)
+        glVar.buffer.cuboid = gl.createBuffer(gl.ARRAY_BUFFER)
+        glVar.buffer.cuboidIndex = gl.createBuffer(gl.ELEMENT_ARRAY_BUFFER)
         gl.bindBuffer(gl.ARRAY_BUFFER, glVar.buffer.hud)
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+            -1.0, -1.0, 0.0, 1.0,
             1.0, -1.0, 1.0, 1.0,
             1.0, 1.0, 1.0, 0.0,
-            -1.0, -1.0, 0.0, 1.0,
-            -1.0, -1.0, 0.0, 1.0,
-            1.0, 1.0, 1.0, 0.0,
             -1.0, 1.0, 0.0, 0.0
+        ]), gl.STATIC_DRAW)
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, glVar.buffer.hudIndex)
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array([
+            1, 2, 0, 0, 2, 3
         ]), gl.STATIC_DRAW)
         gl.vertexAttribPointer(glVar.location.aPosition, 2, gl.FLOAT, false, 4 * 4, 0)
         gl.enableVertexAttribArray(glVar.location.aPosition)
         gl.vertexAttribPointer(glVar.location.aTexcoord, 2, gl.FLOAT, false, 4 * 4, 2 * 4)
         gl.enableVertexAttribArray(glVar.location.aTexcoord)
         
-        gl.bindBuffer(gl.ARRAY_BUFFER, glVar.buffer.triangle)
+        gl.bindBuffer(gl.ARRAY_BUFFER, glVar.buffer.cuboid)
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-            0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.5, 0.5, 0.0
+            -0.5, -0.5, -0.5,
+            0.5, -0.5, -0.5,
+            0.5, 0.5, -0.5,
+            -0.5, 0.5, -0.5,
+            -0.5, -0.5, 0.5,
+            0.5, -0.5, 0.5,
+            0.5, 0.5, 0.5,
+            -0.5, 0.5, 0.5
+        ]), gl.STATIC_DRAW)
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, glVar.buffer.cuboidIndex)
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array([
+            0, 1, 4, 4, 1, 5,
+            6, 2, 7, 7, 2, 3,
+            5, 6, 4, 4, 6, 7,
+            3, 2, 0, 0, 2, 1,
+            1, 2, 5, 5, 2, 6,
+            4, 7, 0, 0, 7, 3
         ]), gl.STATIC_DRAW)
         gl.vertexAttribPointer(glVar.location.aPositionW, 3, gl.FLOAT, false, 3 * 4, 0)
         gl.enableVertexAttribArray(glVar.location.aPositionW)
