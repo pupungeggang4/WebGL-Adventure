@@ -1,6 +1,9 @@
 const sourceVertexShader = `#version 300 es
     precision highp float;
     uniform int u_mode_v;
+    uniform vec3 u_position;
+    uniform vec3 u_rotation;
+    uniform vec3 u_scale;
     in vec4 a_position;
     in vec4 a_position_w;
     in vec2 a_texcoord;
@@ -10,7 +13,22 @@ const sourceVertexShader = `#version 300 es
         if (u_mode_v == 0) {
             gl_Position = a_position;
         } else {
-            gl_Position = a_position_w;
+            vec4 pos = a_position_w;
+            mat4 mat_scale = mat4(
+                u_scale.x, 0.0, 0.0, 0.0,
+                0.0, u_scale.y, 0.0, 0.0,
+                0.0, 0.0, u_scale.z, 0.0,
+                0.0, 0.0, 0.0, 1.0
+            );
+            mat4 mat_translate = mat4(
+                1.0, 0.0, 0.0, 0.0,
+                0.0, 1.0, 0.0, 0.0,
+                0.0, 0.0, 1.0, 0.0,
+                u_position.x, u_position.y, u_position.z, 1.0
+            );
+            pos = mat_scale * pos;
+            pos = mat_translate * pos;
+            gl_Position = pos;
         }
         p_coord = a_texcoord;
     }
@@ -49,6 +67,8 @@ class RenderGL {
         glVar.location = {}
         glVar.location.uModeV = gl.getUniformLocation(glVar.shader.program, 'u_mode_v')
         glVar.location.uModeF = gl.getUniformLocation(glVar.shader.program, 'u_mode_f')
+        glVar.location.uPosition = gl.getUniformLocation(glVar.shader.program, 'u_position')
+        glVar.location.uScale = gl.getUniformLocation(glVar.shader.program, 'u_scale')
         glVar.location.aPosition = gl.getAttribLocation(glVar.shader.program, 'a_position')
         glVar.location.aPositionW = gl.getAttribLocation(glVar.shader.program, 'a_position_w')
         glVar.location.aTexcoord = gl.getAttribLocation(glVar.shader.program, 'a_texcoord')
