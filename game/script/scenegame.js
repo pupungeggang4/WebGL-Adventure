@@ -16,7 +16,12 @@ class SceneGame {
         game.ctx.fillStyle = 'black'
         RenderHUD.drawImageHUD(game.ctx, img.icon.life, UI.hud.iconLife)
         RenderHUD.fillTextHUD(game.ctx, `60/60`, UI.hud.textLife)
-        RenderHUD.fillTextHUD(game.ctx, `${game.world.camera.position.x.toFixed(1)}, ${game.world.camera.position.y.toFixed(1)}, ${game.world.camera.position.z.toFixed(1)}`, UI.hud.textPosition)
+        RenderHUD.fillTextHUD(game.ctx, `POS(${game.world.camera.position.x.toFixed(1)}, ${game.world.camera.position.y.toFixed(1)}, ${game.world.camera.position.z.toFixed(1)})`, UI.hud.textPosition)
+        game.ctx.fillStyle = 'white'
+        RenderHUD.fillRectHUD(game.ctx, UI.hud.lowerRect)
+        game.ctx.fillStyle = 'black'
+        RenderHUD.fillTextHUD(game.ctx, `[WASD] Move`, UI.hud.textTutorial1)
+        RenderHUD.fillTextHUD(game.ctx, `[Arrow] Camera`, UI.hud.textTutorial2)
     }
     
     static renderScreen(game) {
@@ -37,6 +42,8 @@ class SceneGame {
 
         RenderGL.renderCuboid(gl, glVar, game.c1, [0.0, 1.0, 0.0])
         RenderGL.renderCuboid(gl, glVar, game.c2, [0.0, 0.0, 1.0])
+        RenderGL.renderCuboid(gl, glVar, game.c3, [1.0, 1.0, 0.0])
+        RenderGL.renderCuboid(gl, glVar, game.c4, [1.0, 1.0, 1.0])
 
         gl.disable(gl.DEPTH_TEST)
         gl.uniform1i(glVar.location.uModeV, 0)

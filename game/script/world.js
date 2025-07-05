@@ -6,7 +6,7 @@ class World {
 
 class Camera {
     constructor() {
-        this.position = new Vector3(0, 0, 0)
+        this.position = new Vector3(0, 0.05, 0)
         this.rotation = new Vector3(0, 0, 0)
     }
 

@@ -27,8 +27,10 @@ class Game {
 
         RenderGL.glInit(this.gl, this.glVar)
 
-        this.c1 = new Cuboid3(0.0, 0.0, 1.0, 0.1, 0.1, 0.1)
-        this.c2 = new Cuboid3(0.0, 0.0, -1.0, 0.1, 0.1, 0.1)
+        this.c1 = new Cuboid3(0.0, 0.05, 1.0, 0.1, 0.1, 0.1)
+        this.c2 = new Cuboid3(1.0, 0.05, 0.0, 0.1, 0.1, 0.1)
+        this.c3 = new Cuboid3(0.0, 0.05, -1.0, 0.1, 0.1, 0.1)
+        this.c4 = new Cuboid3(-1.0, 0.05, 0.0, 0.1, 0.1, 0.1)
         this.world = new World()
 
         this.frameCurrent = performance.now()

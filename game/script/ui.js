@@ -10,6 +10,8 @@ const UI = {
         iconLife: [20, 20],
         textLife: [64, 24],
         textPosition: [24, 64],
-        lower: [40, 600, 80, 80],
+        lowerRect: [40, 600, 320, 80],
+        textTutorial1: [44, 604],
+        textTutorial2: [44, 644],
     },
 }
