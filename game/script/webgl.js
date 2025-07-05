@@ -4,6 +4,8 @@ const sourceVertexShader = `#version 300 es
     uniform vec3 u_position;
     uniform vec3 u_rotation;
     uniform vec3 u_scale;
+    uniform vec3 u_cam_pos;
+    uniform vec2 u_cam_rot;
     in vec4 a_position;
     in vec4 a_position_w;
     in vec2 a_texcoord;
@@ -26,8 +28,44 @@ const sourceVertexShader = `#version 300 es
                 0.0, 0.0, 1.0, 0.0,
                 u_position.x, u_position.y, u_position.z, 1.0
             );
+            mat4 mat_cam_translate = mat4(
+                1.0, 0.0, 0.0, 0.0,
+                0.0, 1.0, 0.0, 0.0,
+                0.0, 0.0, 1.0, 0.0,
+                -u_cam_pos.x, -u_cam_pos.y, -u_cam_pos.z, 1.0
+            );
+            mat4 mat_cam_zflip = mat4(
+                1.0, 0.0, 0.0, 0.0,
+                0.0, 1.0, 0.0, 0.0,
+                0.0, 0.0, -1.0, 0.0,
+                0.0, 0.0, 0.0, 1.0
+            );
+            mat4 mat_cam_proj = mat4(
+                1.0 / (16.0 / 9.0 * tan(1.1 / 2.0)), 0.0, 0.0, 0.0,
+                0.0, 1.0 / tan(1.1 / 2.0), 0.0, 0.0,
+                0.0, 0.0, (10.0 + 0.1) / (0.1 - 10.0), -1.0,
+                0.0, 0.0, (2.0 * 10.0 * 0.1) / (0.1 - 10.0), 0.0
+            );
+            mat4 mat_cam_rot_x = mat4(
+                1.0, 0.0, 0.0, 0.0,
+                0.0, cos(-u_cam_rot.x), sin(-u_cam_rot.x), 0.0,
+                0.0, -sin(-u_cam_rot.x), cos(-u_cam_rot.x), 0.0,
+                0.0, 0.0, 0.0, 1.0
+            );
+            mat4 mat_cam_rot_y = mat4(
+                cos(-u_cam_rot.y), 0.0, -sin(-u_cam_rot.y), 0.0,
+                0.0, 1.0, 0.0, 0.0,
+                sin(-u_cam_rot.y), 0.0, cos(-u_cam_rot.y), 0.0,
+                0.0, 0.0, 0.0, 1.0
+            );
+
             pos = mat_scale * pos;
             pos = mat_translate * pos;
+            pos = mat_cam_translate * pos;
+            pos = mat_cam_zflip * pos;
+            pos = mat_cam_rot_x * pos;
+            pos = mat_cam_rot_y * pos;
+            pos = mat_cam_proj * pos;
             gl_Position = pos;
         }
         p_coord = a_texcoord;
@@ -38,6 +76,7 @@ const sourceFragmentShader = `#version 300 es
     precision highp float;
     uniform sampler2D t_sampler;
     uniform int u_mode_f;
+    uniform vec3 u_color;
     in vec2 p_coord;
     out vec4 o_color;
 
@@ -45,7 +84,7 @@ const sourceFragmentShader = `#version 300 es
         if (u_mode_f == 0) {
             o_color = texture(t_sampler, p_coord);
         } else {
-            o_color = vec4(0.0, 1.0, 0.0, 1.0);
+            o_color = vec4(u_color, 1.0);
         }
     }
 `
@@ -69,6 +108,9 @@ class RenderGL {
         glVar.location.uModeF = gl.getUniformLocation(glVar.shader.program, 'u_mode_f')
         glVar.location.uPosition = gl.getUniformLocation(glVar.shader.program, 'u_position')
         glVar.location.uScale = gl.getUniformLocation(glVar.shader.program, 'u_scale')
+        glVar.location.uColor = gl.getUniformLocation(glVar.shader.program, 'u_color')
+        glVar.location.uCamPos = gl.getUniformLocation(glVar.shader.program, 'u_cam_pos')
+        glVar.location.uCamRot = gl.getUniformLocation(glVar.shader.program, 'u_cam_rot')
         glVar.location.aPosition = gl.getAttribLocation(glVar.shader.program, 'a_position')
         glVar.location.aPositionW = gl.getAttribLocation(glVar.shader.program, 'a_position_w')
         glVar.location.aTexcoord = gl.getAttribLocation(glVar.shader.program, 'a_texcoord')
@@ -134,5 +176,14 @@ class RenderGL {
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         gl.lineWidth(2)
         gl.useProgram(glVar.shader.program)
+    }
+
+    static renderCuboid(gl, glVar, cuboid, color) {
+        gl.uniform3f(glVar.location.uColor, color[0], color[1], color[2])
+        gl.uniform3f(glVar.location.uPosition, cuboid.position.x, cuboid.position.y, cuboid.position.z)
+        gl.uniform3f(glVar.location.uScale, cuboid.size.x, cuboid.size.y, cuboid.size.z)
+        gl.bindBuffer(gl.ARRAY_BUFFER, glVar.buffer.cuboid)
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, glVar.buffer.cuboidIndex)
+        gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0)
     }
 }

@@ -1,6 +1,15 @@
 class Game {
     constructor() {
         imageLoad()
+        this.keyMapping = {
+            'f': 'w', 'b': 's', 'l': 'a', 'r': 'd',
+            'c_l': 'ArrowLeft', 'c_r': 'ArrowRight'
+        }
+        this.keyPressed = {
+            'f': false, 'b': false, 'l': false, 'r': false,
+            'c_l': false, 'c_r': false
+        }
+
         this.scene = 'title'
         this.state = ''
 
@@ -17,6 +26,10 @@ class Game {
         window.addEventListener('keyup', (event) => this.keyUp(event), false)
 
         RenderGL.glInit(this.gl, this.glVar)
+
+        this.c1 = new Cuboid3(0.0, 0.0, 1.0, 0.1, 0.1, 0.1)
+        this.c2 = new Cuboid3(0.0, 0.0, -1.0, 0.1, 0.1, 0.1)
+        this.world = new World()
 
         this.frameCurrent = performance.now()
         this.framePrevious = performance.now() - 16
@@ -70,9 +83,21 @@ class Game {
 
     keyDown(event) {
         let key = event.key
+
+        for (let k in this.keyPressed) {
+            if (key === this.keyMapping[k]) {
+                this.keyPressed[k] = true
+            }
+        }
     }
 
     keyUp(event) {
         let key = event.key
+
+        for (let k in this.keyPressed) {
+            if (key === this.keyMapping[k]) {
+                this.keyPressed[k] = false
+            }
+        }
     }
 }

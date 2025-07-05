@@ -15,8 +15,8 @@ class Vector3 {
 
 class Cuboid3 {
     constructor(x, y, z, w, h, d) {
-        this.size = Vector3(w, h, d)
-        this.position = Vector3(x, y, z)
+        this.size = new Vector3(w, h, d)
+        this.position = new Vector3(x, y, z)
     }
 }
 

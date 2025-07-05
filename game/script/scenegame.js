@@ -1,6 +1,7 @@
 class SceneGame {
     static loop(game) {
         SceneGame.render(game)
+        game.world.camera.move(game)
     }
 
     static render(game) {
@@ -15,7 +16,7 @@ class SceneGame {
         game.ctx.fillStyle = 'black'
         RenderHUD.drawImageHUD(game.ctx, img.icon.life, UI.hud.iconLife)
         RenderHUD.fillTextHUD(game.ctx, `60/60`, UI.hud.textLife)
-        RenderHUD.fillTextHUD(game.ctx, `0, 0, 0`, UI.hud.textPosition)
+        RenderHUD.fillTextHUD(game.ctx, `${game.world.camera.position.x.toFixed(1)}, ${game.world.camera.position.y.toFixed(1)}, ${game.world.camera.position.z.toFixed(1)}`, UI.hud.textPosition)
     }
     
     static renderScreen(game) {
@@ -30,15 +31,12 @@ class SceneGame {
         gl.enableVertexAttribArray(glVar.location.aPositionW)
         gl.disableVertexAttribArray(glVar.location.aPosition)
         gl.disableVertexAttribArray(glVar.location.aTexcoord)
+        let cam = game.world.camera
+        gl.uniform3f(glVar.location.uCamPos, cam.position.x, cam.position.y, cam.position.z)
+        gl.uniform2f(glVar.location.uCamRot, cam.rotation.x, cam.rotation.y)
 
-        gl.bindBuffer(gl.ARRAY_BUFFER, glVar.buffer.cuboid)
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, glVar.buffer.cuboidIndex)
-        gl.uniform3f(glVar.location.uPosition, 0.1, 0.1, 0.1)
-        gl.uniform3f(glVar.location.uScale, 0.1, 0.1, 0.1)
-        gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0)
-        gl.uniform3f(glVar.location.uPosition, -0.3, -0.1, 0.1)
-        gl.uniform3f(glVar.location.uScale, 0.1, 0.1, 0.1)
-        gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0)
+        RenderGL.renderCuboid(gl, glVar, game.c1, [0.0, 1.0, 0.0])
+        RenderGL.renderCuboid(gl, glVar, game.c2, [0.0, 0.0, 1.0])
 
         gl.disable(gl.DEPTH_TEST)
         gl.uniform1i(glVar.location.uModeV, 0)
@@ -64,7 +62,7 @@ class SceneGame {
 
     }
 
-    static keyDown(game, key) {
+    static keyUp(game, key) {
 
     }
 }
